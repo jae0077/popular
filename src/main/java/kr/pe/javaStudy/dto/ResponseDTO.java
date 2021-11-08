@@ -3,6 +3,8 @@ package kr.pe.javaStudy.dto;
 import java.util.List;
 
 import kr.pe.javaStudy.domain.Menu;
+import kr.pe.javaStudy.domain.RTest;
+import kr.pe.javaStudy.domain.Review;
 import kr.pe.javaStudy.domain.Store;
 import kr.pe.javaStudy.domain.Users;
 import lombok.AllArgsConstructor;
@@ -73,4 +75,21 @@ public class ResponseDTO {
 		boolean success;
 		private List<Menu> menuList;
 	}
+	
+	// 로그인 없는 리뷰 - 나중에 삭제하기
+	@Data
+	@AllArgsConstructor
+	public static class RTestResponse {
+		Boolean success;
+		private Review review;
+	}
+	
+	// 로그인 없는 리뷰 - 나중에 삭제하기
+	@Data
+	@AllArgsConstructor
+	public static class RTestListResponse {
+		Boolean success;
+		private List<RTest> rTestList;
+	}
+	
 }

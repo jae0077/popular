@@ -72,7 +72,7 @@ public class StoreController {
 	}
 	
 //	가게 전체조회
-	@GetMapping("/storeAll")
+	@GetMapping("/storeall")
 	public ResponseDTO.StoreListResponse findAll(){
 		System.out.println("가게 전체 검색시도");
 		List<Store> storeList = storeService.findAll();
