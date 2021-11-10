@@ -49,4 +49,8 @@ public class Menu {
 	@Column(name="menu_image")
 	private String menuImage;
 	
+	@NonNull
+	@Column(name="menu_contents")
+	private String menuContents;
+	
 }
