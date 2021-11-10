@@ -2,6 +2,8 @@ package kr.pe.javaStudy.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,8 @@ import kr.pe.javaStudy.dto.ResponseDTO;
 import kr.pe.javaStudy.dto.UsersDTO;
 import kr.pe.javaStudy.exception.Exception.ArgumentNullException;
 import kr.pe.javaStudy.service.UsersService;
+import net.bytebuddy.asm.Advice.Return;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 public class UsersController {
@@ -23,7 +27,7 @@ public class UsersController {
 	@Autowired
 	private UsersService userservice;
 
-//	유저저장
+//	유저 저장
 	@PostMapping("/users")
 	public ResponseDTO.Create saveUser(@RequestBody UsersDTO.Create dto) {
 		System.out.println("유저저장시도");
@@ -41,6 +45,28 @@ public class UsersController {
 			System.out.println("이미 존재하는 회원입니다.");
 		}
 		return new ResponseDTO.Create(saveId, result);
+	}
+	
+	// 유저 로그인(새로 만든 부분)
+	@GetMapping("/login")
+	public ResponseDTO.Login loginUser(@ApiIgnore HttpSession session, @RequestBody UsersDTO.Login dto) {
+		System.out.println("유저 로그인 시도");
+		boolean result = false;
+		UsersDTO.Get user = userservice.login(dto.getId());
+		
+		if(user != null) {
+			
+			// 로그인 성공시
+			if(user.getPw().equals(dto.getPw())) {
+				session.setAttribute("loginUser", user);
+				result = true;
+				
+			// 로그인 실패시
+			} else {
+				return null;
+			}
+		}
+		return new ResponseDTO.Login(result);
 	}
 	
 	//유저 삭제

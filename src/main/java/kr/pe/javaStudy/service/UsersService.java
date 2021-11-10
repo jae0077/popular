@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javassist.NotFoundException;
 import kr.pe.javaStudy.domain.Users;
 import kr.pe.javaStudy.dto.UsersDTO;
+import kr.pe.javaStudy.dto.UsersDTO.Get;
 import kr.pe.javaStudy.exception.Exception;
 import kr.pe.javaStudy.exception.Exception.ArgumentNullException;
 import kr.pe.javaStudy.repository.UsersRepository;
@@ -24,14 +25,28 @@ public class UsersService {
 		return user;
 	}
 
-	public Long saveUser(Users users) throws ArgumentNullException{
+	public Long saveUser(Users users) throws ArgumentNullException {
 		Users save = null;
-		if(users == null) {
+		if (users == null) {
 			throw new Exception.ArgumentNullException("User can't be null");
-			
+
 		}
 		save = usersRepository.save(users);
 		return save.getUserIdx();
+	}
+	
+	// 로그인(새로 만든 부분)
+	public Get login(String id) {
+		Users User = usersRepository.findUsersById(id);
+		UsersDTO.Get loginUser = null;
+
+		if (User != null) {
+			loginUser = new UsersDTO.Get(User);
+		} else { // 없는 회원일 때
+			return null;
+		}
+
+		return loginUser;
 	}
 
 

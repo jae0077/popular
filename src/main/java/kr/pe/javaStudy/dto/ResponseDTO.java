@@ -26,6 +26,12 @@ public class ResponseDTO {
 		}
 	}
 	
+	// 로그인(새로 만든 부분)
+	public static class Login extends BaseResponse {
+		public Login(boolean success) {
+			super(success);
+		}
+	}
 	
 	public static class Update extends BaseResponse {
 		public Update(Boolean success) {
