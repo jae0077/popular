@@ -10,6 +10,7 @@ public class MenuDTO {
 		private String menuName;
 		private Integer price;
 		private String menuImage;
+		private String menuContents;
 	}
 	
 	@Data
@@ -17,6 +18,8 @@ public class MenuDTO {
 		private Long menuIdx;
 		private String menuName;
 		private Integer price;
+		private String menuImage;
+		private String menuContents;
 	}
 	
 	@Data
@@ -31,5 +34,6 @@ public class MenuDTO {
 		private String menuName;
 		private Integer price;
 		private String menuImage;
+		private String menuContents;
 	}
 }

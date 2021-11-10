@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +30,7 @@ public class MenuController {
 	@Autowired
 	private StoreService storeService;
 
+//	메뉴저장
 	@PostMapping("/menu")
 	public ResponseDTO.Create saveMenu(@RequestBody MenuDTO.Create dto) {
 		System.out.println("메뉴 저장시도");
@@ -38,11 +40,12 @@ public class MenuController {
 
 		try {
 			Store store = storeService.findOne(dto.getStoreIdx());
-
-			saveId = menuService.saveMenu(new Menu(store, dto.getMenuName(), dto.getPrice(), dto.getMenuImage()));
+			
+			saveId = menuService.saveMenu(new Menu(store, dto.getMenuName(), dto.getPrice(), dto.getMenuImage(), dto.getMenuContents()));
 			result = true;
 		} catch (NotFoundException | ArgumentNullException e) {
 //			e.printStackTrace();
+			
 		}
 		return new ResponseDTO.Create(saveId, result);
 	}
@@ -86,11 +89,39 @@ public class MenuController {
 		return new ResponseDTO.MenuListResponse(true, menuList);
 	}
 	
-//	가게 전체조회
+//	메뉴 전체조회
 	@GetMapping("/menuall")
 	public ResponseDTO.MenuListResponse findAll(){
 		System.out.println("전체메뉴 조회");
 		List<Menu> menuList = menuService.findAll();
+		if(menuList.size()==0) {
+			System.out.println("데이터가 존재하지 않습니다.");
+		}
 		return new ResponseDTO.MenuListResponse(true, menuList);
 	}
+	
+//	메뉴 수정
+	@PutMapping("/menu")
+	public ResponseDTO.Update updateMenu(@RequestBody MenuDTO.Update dto){
+		System.out.println("메뉴 수정시도!");
+		boolean result = false;
+		try {
+			menuService.updateMenu(dto);
+			result = true;
+		} catch(Exception e) {
+//			e.printStackTrace();
+		}
+		return new ResponseDTO.Update(result);
+	}
+	
+//	가격으로 메뉴조회
+	@GetMapping("/menu/price")
+	public ResponseDTO.MenuListResponse findAllByMenuPrice(MenuDTO.Get dto){
+		System.out.println("가격으로 메뉴조회");
+		
+		List<Menu> menuList = menuService.findAllByPrice(dto);
+		
+		return new ResponseDTO.MenuListResponse(true, menuList);
+	}
+	
 }

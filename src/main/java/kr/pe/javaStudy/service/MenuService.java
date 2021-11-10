@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import kr.pe.javaStudy.domain.Menu;
 import kr.pe.javaStudy.dto.MenuDTO;
+import kr.pe.javaStudy.dto.MenuDTO.Get;
+import kr.pe.javaStudy.dto.MenuDTO.Update;
 import kr.pe.javaStudy.exception.Exception;
 import kr.pe.javaStudy.exception.Exception.ArgumentNullException;
 import kr.pe.javaStudy.repository.MenuRepository;
@@ -43,6 +45,21 @@ public class MenuService {
 
 	public List<Menu> findAll() {
 		return menuRepository.findAll();
+	}
+
+	public void updateMenu(MenuDTO.Update dto) {
+		Menu menu = findOne(dto.getMenuIdx());
+		
+		menu.setMenuName(dto.getMenuName());
+		menu.setPrice(dto.getPrice());
+		menu.setMenuImage(dto.getMenuImage());
+		menu.setMenuContents(dto.getMenuContents());
+		
+		menuRepository.save(menu);
+	}
+
+	public List<Menu> findAllByPrice(MenuDTO.Get dto) {
+		return menuRepository.findMenuListByPrice(dto.getPrice());
 	}
 	
 

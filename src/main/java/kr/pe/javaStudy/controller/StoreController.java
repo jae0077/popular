@@ -76,7 +76,10 @@ public class StoreController {
 	public ResponseDTO.StoreListResponse findAll(){
 		System.out.println("가게 전체 검색시도");
 		List<Store> storeList = storeService.findAll();
-
+		
+		if(storeList.size()==0) {
+			System.out.println("가게 정보가 존재하지 않습니다.");
+		}
 		return new ResponseDTO.StoreListResponse(true, storeList);
 	}
 	
