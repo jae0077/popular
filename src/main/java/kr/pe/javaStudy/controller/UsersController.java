@@ -2,6 +2,7 @@ package kr.pe.javaStudy.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,21 +28,26 @@ public class UsersController {
 	private UsersService userservice;
 
 	@PostMapping("/login")
-	public ResponseDTO.Login loginUser(@ApiIgnore HttpSession session,@RequestBody UsersDTO.Login dto) {
+	public ResponseDTO.Login loginUser(HttpServletRequest request, @RequestBody UsersDTO.Login dto) {
 		System.out.println("유저 로그인 시도");
+		
 		boolean result = false;
-		UsersDTO.Get user = userservice.login(dto.getId());
-
+		Users user = userservice.findUserById(dto.getId());
+		
 		if (user != null) {
-//			System.out.println("111");
+			System.out.println("111");
 			// 로그인 성공시
 			if (user.getPw().equals(dto.getPw())) {
-				session.setAttribute("loginUser", user);
+//				session.setAttribute("loginUser", user);
+				request.getSession().setAttribute("loginUser", user);
+				Object object = request.getSession().getAttribute("loginUser");
+				Users entity = (Users)object;
+				System.out.println(entity.getId() + "로그인성공");
 				result = true;
 
 				// 로그인 실패시
 			} else {
-				return null;
+				System.out.println("로그인 실패!: 비밀번호가 틀렸습니다.");
 			}
 		}
 		return new ResponseDTO.Login(result);
@@ -105,7 +111,9 @@ public class UsersController {
 		boolean result = false;
 		Users user = null;
 		try {
+			System.out.println("1111");
 			user = userservice.findOne(dto.getUserIdx());
+			System.out.println("2222");
 			result = true;
 		} catch (NotFoundException e) {
 //			e.printStackTrace();

@@ -40,8 +40,8 @@ public class MenuController {
 
 		try {
 			Store store = storeService.findOne(dto.getStoreIdx());
-			
-			saveId = menuService.saveMenu(new Menu(store, dto.getMenuName(), dto.getPrice(), dto.getMenuImage(), dto.getMenuContents()));
+			saveId = menuService.saveMenu(new Menu(store, dto.getMenuName(), dto.getPrice(),
+														  dto.getMenuImage(), dto.getMenuContents()));
 			result = true;
 		} catch (NotFoundException | ArgumentNullException e) {
 //			e.printStackTrace();
@@ -50,9 +50,12 @@ public class MenuController {
 		return new ResponseDTO.Create(saveId, result);
 	}
 
+//	메뉴삭제
 	@DeleteMapping("/menu")
 	public ResponseDTO.Delete deletMenu(MenuDTO.Delete dto) {
+		
 		System.out.println("가게 삭제시도");
+		
 		boolean result = false;
 		try {
 			menuService.deleteMenu(dto);

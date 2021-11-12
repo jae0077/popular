@@ -2,6 +2,8 @@ package kr.pe.javaStudy.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,18 +21,18 @@ public class UsersService {
 	private UsersRepository usersRepository;
 
 	// 로그인(새로 만든 부분)
-	public UsersDTO.Get login(String id) {
-		Users User = usersRepository.findUsersById(id);
-		UsersDTO.Get loginUser = null;
-
-		if (User != null) {
-			loginUser = new UsersDTO.Get(User);
-		} else { // 없는 회원일 때
-			return null;
-		}
-
-		return loginUser;
-	}
+//	public UsersDTO.Get login(String id) {
+//		Users User = usersRepository.findUsersById(id);
+//		UsersDTO.Get loginUser = null;
+//
+//		if (User != null) {
+//			loginUser = new UsersDTO.Get(User);
+//		} else { // 없는 회원일 때
+//			return null;
+//		}
+//
+//		return loginUser;
+//	}
 // 유저찾기
 	
 	public Users findUserById(String UserId) throws NullPointerException {
@@ -53,6 +55,7 @@ public class UsersService {
 		usersRepository.deleteById(user.getUserIdx());
 	}
 
+//	@Transactional
 	public Users findOne(Long userIdx) throws NotFoundException {
 		Users user = null;
 		try {
