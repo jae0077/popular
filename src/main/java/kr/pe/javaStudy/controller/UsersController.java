@@ -3,7 +3,9 @@ package kr.pe.javaStudy.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpSession;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javassist.NotFoundException;
@@ -19,13 +23,13 @@ import kr.pe.javaStudy.dto.ResponseDTO;
 import kr.pe.javaStudy.dto.UsersDTO;
 import kr.pe.javaStudy.exception.Exception.ArgumentNullException;
 import kr.pe.javaStudy.service.UsersService;
-import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 public class UsersController {
 
 	@Autowired
 	private UsersService userservice;
+
 
 	@PostMapping("/login")
 	public ResponseDTO.Login loginUser(HttpServletRequest request, @RequestBody UsersDTO.Login dto) {
@@ -43,17 +47,43 @@ public class UsersController {
 				Object object = request.getSession().getAttribute("loginUser");
 				Users entity = (Users)object;
 				System.out.println(entity.getId() + "로그인성공");
-				result = true;
 
-				// 로그인 실패시
+				result = true;
+				System.out.println("로그인 성공!");
+
 			} else {
+
 				System.out.println("로그인 실패!: 비밀번호가 틀렸습니다.");
+
 			}
+		} else {
+			System.out.println("ID와 PW를 다시 확인해주세요.");
 		}
+
 		return new ResponseDTO.Login(result);
+
 	}
 
-//	유저저장
+	// 유저 로그아웃
+	@RequestMapping("/user/logout")
+	public ResponseDTO.Logout logoutUser(HttpServletRequest request) {
+
+		boolean result = false;
+		if (request.getSession().getAttribute("user") != null) {
+
+			request.getSession().removeAttribute("user");
+			result = true;
+			System.out.println("로그아웃 성공!");
+
+		} else {
+			System.out.println("로그아웃 실패! : 로그인이 되어있지 않은 상태에서는 로그아웃이 불가합니다.");
+		}
+
+		return new ResponseDTO.Logout(result);
+
+	}
+
+	// 유저 저장
 	@PostMapping("/users")
 	public ResponseDTO.Create saveUser(@RequestBody UsersDTO.Create dto) {
 		System.out.println("유저저장시도");
@@ -104,7 +134,7 @@ public class UsersController {
 		return new ResponseDTO.Update(result);
 	}
 
-	// 유저 단일 조회
+	// 유저 단일조회
 	@GetMapping("/users")
 	public ResponseDTO.UsersResponse findOne(UsersDTO.Get dto) {
 		System.out.println("유저 단일 검색 시도");

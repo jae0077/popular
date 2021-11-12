@@ -3,7 +3,6 @@ package kr.pe.javaStudy.dto;
 import java.util.List;
 
 import kr.pe.javaStudy.domain.Menu;
-import kr.pe.javaStudy.domain.RTest;
 import kr.pe.javaStudy.domain.Review;
 import kr.pe.javaStudy.domain.Store;
 import kr.pe.javaStudy.domain.Users;
@@ -35,6 +34,20 @@ public class ResponseDTO {
 
 	public static class Delete extends BaseResponse {
 		public Delete(Boolean success) {
+			super(success);
+		}
+	}
+	
+	// 로그인
+	public static class Login extends BaseResponse {
+		public Login(boolean success) {
+			super(success);
+		}
+	}
+
+	// 로그아웃
+	public static class Logout extends BaseResponse {
+		public Logout(boolean success) {
 			super(success);
 		}
 	}
@@ -74,27 +87,20 @@ public class ResponseDTO {
 		private List<Menu> menuList;
 	}
 
-	// 로그인 없는 리뷰 - 나중에 삭제하기
+	// 로그인 후 리뷰
 	@Data
 	@AllArgsConstructor
-	public static class RTestResponse {
+	public static class ReviewResponse {
 		Boolean success;
 		private Review review;
 	}
-
-	// 로그인 없는 리뷰 - 나중에 삭제하기
+	
+	// 로그인 후 리뷰
 	@Data
 	@AllArgsConstructor
-	public static class RTestListResponse {
+	public static class ReviewListResponse {
 		Boolean success;
-		private List<RTest> rTestList;
-	}
-
-	// 로그인(새로 만든 부분)
-	public static class Login extends BaseResponse {
-		public Login(boolean success) {
-			super(success);
-		}
+		private List<Review> reviewList;
 	}
 
 }

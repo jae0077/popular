@@ -35,9 +35,11 @@ public class StoreController {
 //	가게 이름으로 조회
 	@GetMapping("/store/namecontaining")
 	public ResponseDTO.StoreListResponse findAllByName(StoreDTO.Get dto) throws NotFoundException {
+
 		
 		System.out.println("가게 이름으로 조회");
 		
+
 		List<Store> storeList = storeService.findAllByNameContaining(dto);
 
 		return new ResponseDTO.StoreListResponse(true, storeList);
@@ -46,10 +48,12 @@ public class StoreController {
 //	내 가게 조회
 
 	@GetMapping("/store/useridx")
+
 	public ResponseDTO.StoreListResponse findMyStore(HttpServletRequest request) throws javassist.NotFoundException {
 		
+
 		System.out.println("내 가게 조회");
-		
+
 		boolean result = false;
 		List<Store> storeList = null;
 		
@@ -59,6 +63,10 @@ public class StoreController {
 			Users user = userService.findOne(entity.getUserIdx());
 			storeList = user.getStoreList();
 			result = true;
+
+		} catch (javassist.NotFoundException e) {
+			e.printStackTrace();
+
 		}
 		return new ResponseDTO.StoreListResponse(result, storeList);
 	}
@@ -66,7 +74,7 @@ public class StoreController {
 //	가게 단일 조회
 	@GetMapping("/store")
 	public ResponseDTO.StoreResponse findOne(StoreDTO.Get dto) {
-		
+
 		System.out.println("가게 단일 검색 시도");
 		
 		boolean result = false;
@@ -85,7 +93,7 @@ public class StoreController {
 	@GetMapping("/storeall")
 	public ResponseDTO.StoreListResponse findAll() {
 		System.out.println("가게 전체 검색시도");
-		
+
 		List<Store> storeList = storeService.findAll();
 
 		if (storeList.size() == 0) {
@@ -96,10 +104,13 @@ public class StoreController {
 
 //	가게 삭제
 	@DeleteMapping("/store")
+
 	public ResponseDTO.Delete deleteStore(HttpServletRequest request, @RequestBody StoreDTO.Delete dto) throws javassist.NotFoundException {
+
 		System.out.println("가게 삭제 시도");
 		
 		boolean result = false;
+
 
 		if (request.getSession().getAttribute("loginUser") != null) {
 			Object object = request.getSession().getAttribute("loginUser");
@@ -113,25 +124,29 @@ public class StoreController {
 					storeService.deleteStore(dto);
 					result = true;
 				} else {
-					System.out.println("본인의 강의만 삭제할 수 있습니다.");
+					System.out.println("본인의 만 삭제할 수 있습니다.");
 				}
 			} catch (NotFoundException e) {
 //				e.printStackTrace();
 			}
+
 		}
 		return new ResponseDTO.Delete(result);
 	}
 
 //	가게 저장
 	@PostMapping("/store")
+
 	public ResponseDTO.Create saveStore(HttpServletRequest request, @RequestBody StoreDTO.Create dto) throws javassist.NotFoundException {
 		
+
 		System.out.println("가게 저장 시도");
 
 		boolean result = false;
 		Long saveId = null;
 
 		try {
+
 			if (request.getSession().getAttribute("loginUser") != null) {
 
 				Object object = request.getSession().getAttribute("loginUser");
@@ -148,6 +163,7 @@ public class StoreController {
 				}
 			}
 		} catch (ArgumentNullException e) {
+
 //			e.printStackTrace();
 		}
 		return new ResponseDTO.Create(saveId, result);
@@ -155,11 +171,14 @@ public class StoreController {
 
 //	가게 수정
 	@PutMapping("/store")
+
 	public ResponseDTO.Update updateStore(HttpServletRequest request, @RequestBody StoreDTO.Update dto) {
 		
+
 		System.out.println("가게 수정 시도");
 		
 		boolean result = false;
+
 		
 		if (request.getSession().getAttribute("loginUser") != null) {
 			Object object = request.getSession().getAttribute("loginUser");
@@ -178,6 +197,7 @@ public class StoreController {
 			} catch (javassist.NotFoundException | NotFoundException e) {
 //				e.printStackTrace();
 			}
+
 
 		}
 		return new ResponseDTO.Update(result);

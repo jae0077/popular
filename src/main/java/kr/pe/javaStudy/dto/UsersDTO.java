@@ -1,6 +1,5 @@
 package kr.pe.javaStudy.dto;
 
-import kr.pe.javaStudy.domain.Users;
 import lombok.Data;
 
 public class UsersDTO {
@@ -42,15 +41,7 @@ public class UsersDTO {
 		private String pw;
 		private String type;
 
-		
-//		public Get(Users entity) {
-//			this.userIdx = entity.getUserIdx();
-//			this.userName = entity.getUserName();
-//			this.userPhone = entity.getUserPhone();
-//			this.id = entity.getId();
-//			this.pw = entity.getPw();
-//			this.type = entity.getType();
-//		}
+
 	}
 
 }

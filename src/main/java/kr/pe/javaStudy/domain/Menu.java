@@ -22,35 +22,33 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@SequenceGenerator(name="menu_seq", sequenceName = "menu_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "menu_seq", sequenceName = "menu_seq", initialValue = 1, allocationSize = 1)
 public class Menu {
-	
-	
+
 	@Id
-	@Column(name="menu_idx")
+	@Column(name = "menu_idx")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "menu_seq")
 	private Long menuIdx;
-	
-	
+
 	@JsonManagedReference
 	@ManyToOne
 	@NonNull
-	@JoinColumn(name="store_idx")
+	@JoinColumn(name = "store_idx")
 	private Store storeIdx;
-	
+
 	@NonNull
-	@Column(name="menu_name")
+	@Column(name = "menu_name")
 	private String menuName;
-	
+
 	@NonNull
 	private Integer price;
-	
+
 	@NonNull
-	@Column(name="menu_image")
+	@Column(name = "menu_image")
 	private String menuImage;
-	
+
 	@NonNull
-	@Column(name="menu_contents")
+	@Column(name = "menu_contents")
 	private String menuContents;
-	
+
 }

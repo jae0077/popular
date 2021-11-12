@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import kr.pe.javaStudy.domain.Menu;
 
-public interface MenuRepository extends JpaRepository<Menu, Long>{
+public interface MenuRepository extends JpaRepository<Menu, Long> {
 
 	List<Menu> findMenuByMenuNameContaining(String menuName);
 

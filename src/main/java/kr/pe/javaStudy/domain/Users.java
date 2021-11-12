@@ -25,36 +25,38 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@SequenceGenerator(name="user_seq", sequenceName = "user_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "user_seq", sequenceName = "user_seq", initialValue = 1, allocationSize = 1)
 public class Users {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "user_seq")
-	@Column(name="user_idx")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+	@Column(name = "user_idx")
 	private Long userIdx;
-	
-	@Column(name="user_name")
+
+	@Column(name = "user_name")
 	@NonNull
 	private String userName;
-	
-	@Column(name="user_phone")
+
+	@Column(name = "user_phone")
 	@NonNull
 	private String userPhone;
-	
+
 	@NonNull
 	private String id;
-	
+
 	@NonNull
 	private String pw;
-	
+
 	@NonNull
 	private String type;
+
 	
 //	issue 기록  (fetch =  FetchType.eager로 처리)
+
 	@OneToMany(mappedBy = "userIdx", cascade = CascadeType.ALL)
 	@JsonBackReference
 	private List<Store> storeList;
-	
+
 	@OneToMany(mappedBy = "userIdx", cascade = CascadeType.ALL)
 	@JsonBackReference
 	private List<Review> reviewList;

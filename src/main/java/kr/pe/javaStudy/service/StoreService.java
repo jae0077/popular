@@ -20,6 +20,7 @@ public class StoreService {
 
 	@Autowired
 	private StoreRepository storeRepository;
+
 	@Transactional
 	public Store findOne(Long storeIdx) throws NotFoundException{
 		Store store = storeRepository.findById(storeIdx).orElseThrow(() -> new Exception.NotFoundException ("Store with idx: " + storeIdx + " is not valid"));
@@ -28,41 +29,48 @@ public class StoreService {
 	}
 //	@Transactional
 	public List<Store> findAll(){
+
 		return storeRepository.findAll();
 	}
 
 	public void deleteStore(StoreDTO.Delete dto) throws NotFoundException {
 		Store store = findOne(dto.getStoreIdx());
+
 		System.out.println(store.getStoreName());
 //		storeRepository.deleteById(store.getStoreIdx());
+
 		storeRepository.deleteById(store.getStoreIdx());
 		System.out.println("deletStore2");
 	}
-	
+
 	public List<Store> findAllByNameContaining(StoreDTO.Get dto) {
 		return storeRepository.findStoreByStoreNameContaining(dto.getStoreName());
 	}
+
 	
 //	@Transactional
 	public Long saveStore(Store store) throws ArgumentNullException{
 		Store save = null;
 		System.out.println("savestore");
 		if(store == null) {
+
 			throw new Exception.ArgumentNullException("Store can't be null");
 		}
 		save = storeRepository.save(store);
 		return save.getStoreIdx();
 	}
 
+
 	public void updateStore(Long storeIdx, StoreDTO.Update dto) throws NotFoundException{
 		Store store = findOne(storeIdx);
 		
+
 		store.setStoreName(dto.getStoreName());
 		store.setTel(dto.getTel());
 		store.setAddress(dto.getAddress());
 		store.setOpenTime(dto.getOpenTime());
 		store.setCloseTime(dto.getCloseTime());
-		
+
 		storeRepository.save(store);
 	}
 	
