@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
@@ -32,29 +35,42 @@ public class Review {
 	@Column(name = "review_idx")
 	private Long reviewIdx;
 
-	@JsonManagedReference
-	@ManyToOne
+
 	@NonNull
+	@ManyToOne
+	@JsonManagedReference
 	@JoinColumn(name = "user_idx")
 	private Users userIdx;
 
-	@JsonManagedReference
-	@ManyToOne
 	@NonNull
+	@ManyToOne
+	@JsonManagedReference
 	@JoinColumn(name = "store_idx")
 	private Store storeIdx;
 
 	@NonNull
-	@JoinColumn(name = "review_content")
+
+	@Column(name = "review_content")
 	private String reviewContent;
 
 	@NonNull
+	@CreationTimestamp
 	private LocalDateTime created;
 
 	@NonNull
+	@UpdateTimestamp
 	private LocalDateTime updated;
 
 	@NonNull
-	@JoinColumn(name = "review_image")
+	@Column(name = "review_image")
 	private String reviewImage;
+
+	public Review(@NonNull Users userIdx, @NonNull Store storeIdx, @NonNull String reviewContent,
+			@NonNull String reviewImage) {
+		this.userIdx = userIdx;
+		this.storeIdx = storeIdx;
+		this.reviewContent = reviewContent;
+		this.reviewImage = reviewImage;
+	}
+
 }

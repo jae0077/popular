@@ -4,7 +4,6 @@ public class Exception {
 
 	public static class NotFoundException extends Throwable {
 		public NotFoundException(String s) {
-
 		}
 	}
 

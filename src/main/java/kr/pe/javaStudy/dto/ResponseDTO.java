@@ -88,5 +88,27 @@ public class ResponseDTO {
 		private List<Menu> menuList;
 	}
 
+	// 로그인 후 리뷰
+	@Data
+	@AllArgsConstructor
+	public static class ReviewResponse {
+		Boolean success;
+		private Review review;
+	}
+	
+	// 로그인 후 리뷰
+	@Data
+	@AllArgsConstructor
+	public static class ReviewListResponse {
+		Boolean success;
+		private List<Review> reviewList;
+	}
+
+	// 로그인(새로 만든 부분)
+	public static class Login extends BaseResponse {
+		public Login(boolean success) {
+			super(success);
+		}
+	}
 
 }
