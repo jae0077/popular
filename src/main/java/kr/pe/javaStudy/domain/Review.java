@@ -24,37 +24,37 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@SequenceGenerator(name="review_seq", sequenceName="review_seq", initialValue=1, allocationSize=1)
+@SequenceGenerator(name = "review_seq", sequenceName = "review_seq", initialValue = 1, allocationSize = 1)
 public class Review {
-   
-   @Id
-   @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="review_seq")
-   @Column(name="review_idx")
-   private Long reviewIdx;
-   
-   @JsonManagedReference
-   @ManyToOne
-   @NonNull
-   @JoinColumn(name="user_idx")
-   private Users userIdx;
-   
-   @JsonManagedReference
-   @ManyToOne
-   @NonNull
-   @JoinColumn(name="store_idx")
-   private Store storeIdx;
-   
-   @NonNull
-   @JoinColumn(name="review_content")
-   private String reviewContent;
-   
-   @NonNull
-   private LocalDateTime created;
-   
-   @NonNull
-   private LocalDateTime updated;
-   
-   @NonNull
-   @JoinColumn(name="review_image")
-   private String reviewImage;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "review_seq")
+	@Column(name = "review_idx")
+	private Long reviewIdx;
+
+	@JsonManagedReference
+	@ManyToOne
+	@NonNull
+	@JoinColumn(name = "user_idx")
+	private Users userIdx;
+
+	@JsonManagedReference
+	@ManyToOne
+	@NonNull
+	@JoinColumn(name = "store_idx")
+	private Store storeIdx;
+
+	@NonNull
+	@JoinColumn(name = "review_content")
+	private String reviewContent;
+
+	@NonNull
+	private LocalDateTime created;
+
+	@NonNull
+	private LocalDateTime updated;
+
+	@NonNull
+	@JoinColumn(name = "review_image")
+	private String reviewImage;
 }

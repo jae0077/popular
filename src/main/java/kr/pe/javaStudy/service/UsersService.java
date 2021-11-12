@@ -18,7 +18,7 @@ public class UsersService {
 	@Autowired
 	private UsersRepository usersRepository;
 
-	// 로그인(새로 만든 부분)
+	// 로그인
 	public UsersDTO.Get login(String id) {
 		Users User = usersRepository.findUsersById(id);
 		UsersDTO.Get loginUser = null;
@@ -31,8 +31,8 @@ public class UsersService {
 
 		return loginUser;
 	}
-// 유저찾기
 	
+	// 유저 찾기
 	public Users findUserById(String UserId) throws NullPointerException {
 		Users user = usersRepository.findUsersById(UserId);
 		return user;

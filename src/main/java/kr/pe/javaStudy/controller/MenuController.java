@@ -14,10 +14,8 @@ import kr.pe.javaStudy.domain.Menu;
 import kr.pe.javaStudy.domain.Store;
 import kr.pe.javaStudy.dto.MenuDTO;
 import kr.pe.javaStudy.dto.ResponseDTO;
-import kr.pe.javaStudy.dto.ResponseDTO.MenuListResponse;
 import kr.pe.javaStudy.exception.Exception.ArgumentNullException;
 import kr.pe.javaStudy.exception.Exception.NotFoundException;
-import kr.pe.javaStudy.repository.MenuRepository;
 import kr.pe.javaStudy.service.MenuService;
 import kr.pe.javaStudy.service.StoreService;
 
@@ -40,12 +38,13 @@ public class MenuController {
 
 		try {
 			Store store = storeService.findOne(dto.getStoreIdx());
-			
-			saveId = menuService.saveMenu(new Menu(store, dto.getMenuName(), dto.getPrice(), dto.getMenuImage(), dto.getMenuContents()));
+
+			saveId = menuService.saveMenu(
+					new Menu(store, dto.getMenuName(), dto.getPrice(), dto.getMenuImage(), dto.getMenuContents()));
 			result = true;
 		} catch (NotFoundException | ArgumentNullException e) {
 //			e.printStackTrace();
-			
+
 		}
 		return new ResponseDTO.Create(saveId, result);
 	}
@@ -82,46 +81,46 @@ public class MenuController {
 
 //	이름으로 메뉴검색
 	@GetMapping("/menu/namecontaining")
-	public ResponseDTO.MenuListResponse findMenuByName(MenuDTO.Get dto){
+	public ResponseDTO.MenuListResponse findMenuByName(MenuDTO.Get dto) {
 		System.out.println("메뉴 이름으로 검색");
 		List<Menu> menuList = menuService.findAllByNameContaining(dto);
-		
+
 		return new ResponseDTO.MenuListResponse(true, menuList);
 	}
-	
+
 //	메뉴 전체조회
 	@GetMapping("/menuall")
-	public ResponseDTO.MenuListResponse findAll(){
+	public ResponseDTO.MenuListResponse findAll() {
 		System.out.println("전체메뉴 조회");
 		List<Menu> menuList = menuService.findAll();
-		if(menuList.size()==0) {
+		if (menuList.size() == 0) {
 			System.out.println("데이터가 존재하지 않습니다.");
 		}
 		return new ResponseDTO.MenuListResponse(true, menuList);
 	}
-	
+
 //	메뉴 수정
 	@PutMapping("/menu")
-	public ResponseDTO.Update updateMenu(@RequestBody MenuDTO.Update dto){
+	public ResponseDTO.Update updateMenu(@RequestBody MenuDTO.Update dto) {
 		System.out.println("메뉴 수정시도!");
 		boolean result = false;
 		try {
 			menuService.updateMenu(dto);
 			result = true;
-		} catch(Exception e) {
+		} catch (Exception e) {
 //			e.printStackTrace();
 		}
 		return new ResponseDTO.Update(result);
 	}
-	
+
 //	가격으로 메뉴조회
 	@GetMapping("/menu/price")
-	public ResponseDTO.MenuListResponse findAllByMenuPrice(MenuDTO.Get dto){
+	public ResponseDTO.MenuListResponse findAllByMenuPrice(MenuDTO.Get dto) {
 		System.out.println("가격으로 메뉴조회");
-		
+
 		List<Menu> menuList = menuService.findAllByPrice(dto);
-		
+
 		return new ResponseDTO.MenuListResponse(true, menuList);
 	}
-	
+
 }
