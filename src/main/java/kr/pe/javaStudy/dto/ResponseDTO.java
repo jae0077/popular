@@ -3,7 +3,6 @@ package kr.pe.javaStudy.dto;
 import java.util.List;
 
 import kr.pe.javaStudy.domain.Menu;
-import kr.pe.javaStudy.domain.RTest;
 import kr.pe.javaStudy.domain.Review;
 import kr.pe.javaStudy.domain.Store;
 import kr.pe.javaStudy.domain.Users;
@@ -102,13 +101,6 @@ public class ResponseDTO {
 	public static class ReviewListResponse {
 		Boolean success;
 		private List<Review> reviewList;
-	}
-
-	// 로그인(새로 만든 부분)
-	public static class Login extends BaseResponse {
-		public Login(boolean success) {
-			super(success);
-		}
 	}
 
 }
