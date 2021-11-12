@@ -17,15 +17,15 @@ public class RTestDTO {
 		private String reviewContent;
 		private String reviewImage;
 	}
-	
+
 	@Data
 	public static class Delete {
 		private Long idx;
 	}
-	
+
 	@Data
 	public static class Get {
 		private Long idx;
 	}
-	
+
 }

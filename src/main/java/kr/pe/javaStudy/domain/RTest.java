@@ -23,22 +23,22 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@SequenceGenerator(name="review_seq", sequenceName="review_seq", initialValue=1, allocationSize=1)
+@SequenceGenerator(name = "review_seq", sequenceName = "review_seq", initialValue = 1, allocationSize = 1)
 public class RTest {
-   
-   @Id
-   @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="review_seq")
-   private Long idx;
-   
-   @NonNull
-   @JoinColumn(name="review_content")
-   private String reviewContent;
-   
-   @NonNull
-   @CreationTimestamp
-   private LocalDateTime created;
-   
-   @NonNull
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "review_seq")
+	private Long idx;
+
+	@NonNull
+	@JoinColumn(name = "review_content")
+	private String reviewContent;
+
+	@NonNull
+	@CreationTimestamp
+	private LocalDateTime created;
+
+	@NonNull
 	@UpdateTimestamp
 	private LocalDateTime updated;
 

@@ -38,6 +38,20 @@ public class ResponseDTO {
 			super(success);
 		}
 	}
+	
+	// 로그인
+	public static class Login extends BaseResponse {
+		public Login(boolean success) {
+			super(success);
+		}
+	}
+
+	// 로그아웃
+	public static class Logout extends BaseResponse {
+		public Logout(boolean success) {
+			super(success);
+		}
+	}
 
 	@Data
 	@AllArgsConstructor
@@ -74,27 +88,5 @@ public class ResponseDTO {
 		private List<Menu> menuList;
 	}
 
-	// 로그인 없는 리뷰 - 나중에 삭제하기
-	@Data
-	@AllArgsConstructor
-	public static class RTestResponse {
-		Boolean success;
-		private Review review;
-	}
-
-	// 로그인 없는 리뷰 - 나중에 삭제하기
-	@Data
-	@AllArgsConstructor
-	public static class RTestListResponse {
-		Boolean success;
-		private List<RTest> rTestList;
-	}
-
-	// 로그인(새로 만든 부분)
-	public static class Login extends BaseResponse {
-		public Login(boolean success) {
-			super(success);
-		}
-	}
 
 }

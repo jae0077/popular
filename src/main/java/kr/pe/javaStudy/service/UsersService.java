@@ -18,21 +18,13 @@ public class UsersService {
 	@Autowired
 	private UsersRepository usersRepository;
 
-	// 로그인(새로 만든 부분)
-	public UsersDTO.Get login(String id) {
-		Users User = usersRepository.findUsersById(id);
-		UsersDTO.Get loginUser = null;
-
-		if (User != null) {
-			loginUser = new UsersDTO.Get(User);
-		} else { // 없는 회원일 때
-			return null;
-		}
-
-		return loginUser;
+	// 로그인
+	public Users login(UsersDTO.Login dto) {
+		Users User = usersRepository.findUsersByIdAndPw(dto.getId(), dto.getPw());
+		return User;
 	}
-// 유저찾기
 	
+	// 유저 찾기
 	public Users findUserById(String UserId) throws NullPointerException {
 		Users user = usersRepository.findUsersById(UserId);
 		return user;
