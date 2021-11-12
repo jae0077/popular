@@ -35,7 +35,6 @@ public class Review {
 	@Column(name = "review_idx")
 	private Long reviewIdx;
 
-
 	@NonNull
 	@ManyToOne
 	@JsonManagedReference

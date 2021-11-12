@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,12 +84,28 @@ public class ReviewController {
 		boolean result = false;
 
 		if (request.getSession().getAttribute("user") != null) {
+			Object object = request.getSession().getAttribute("user");
+			Users entity = (Users) object;
 
 			try {
-				reviewService.updateReview(dto);
-				result = true;
-			} catch (NotFoundException e) {
-				e.printStackTrace();
+				Users user = userService.findOne(entity.getUserIdx());
+				List<Review> reviewList = user.getReviewList();
+
+				for (Review r : reviewList) {
+
+					if (r.getReviewIdx() == dto.getReviewIdx()) {
+						try {
+							reviewService.updateReview(dto);
+							result = true;
+						} catch (NotFoundException e) {
+							e.printStackTrace();
+						}
+						break;
+					}
+				}
+
+			} catch (javassist.NotFoundException e1) {
+				e1.printStackTrace();
 			}
 
 		} else {
@@ -100,27 +117,19 @@ public class ReviewController {
 
 	// 후기 삭제
 	@DeleteMapping("/review")
-	public ResponseDTO.Delete deleteReview(HttpServletRequest request, ReviewDTO.Delete dto) {
+	public ResponseDTO.Delete deleteReview(HttpServletRequest request, @RequestBody ReviewDTO.Delete dto) {
 		System.out.println("--- 후기 삭제 시도 ---");
 
 		boolean result = false;
 
 		if (request.getSession().getAttribute("user") != null) {
 			Object object = request.getSession().getAttribute("user");
-			Users entity = (Users) object;
+			Users user = (Users) object;
 
 			try {
-				Users user = userService.findOne(entity.getUserIdx());
-				Store store = storeService.findOne(dto.getStoreIdx());
-
-				if (!reviewService.isNotAlreadyReview(user, store)) {
-					reviewService.deleteReview(user, store);
-					result = true;
-				} else {
-					System.out.println("본인이 작성한 리뷰만 삭제할 수 있습니다.");
-				}
-
-			} catch (NotFoundException | Exception e) {
+				reviewService.deleteReview(user, dto);
+				result = true;
+			} catch (NotFoundException e) {
 				e.printStackTrace();
 			}
 
@@ -142,15 +151,15 @@ public class ReviewController {
 	}
 
 	// 특정 유저가 작성한 후기 리스트 검색
-	@GetMapping("/review/useridx")
-	public ResponseDTO.ReviewListResponse findAllByUserIdx(@RequestBody ReviewDTO.Get dto) {
+	@GetMapping("/review/user/{idx}")
+	public ResponseDTO.ReviewListResponse findAllByUserIdx(@PathVariable Long idx) {
 		System.out.println("--- 특정 유저가 작성한 후기 리스트 검색 시도 ---");
 
 		boolean result = false;
 		List<Review> reviewList = null;
 
 		try {
-			Users user = userService.findOne(dto.getUserIdx());
+			Users user = userService.findOne(idx);
 			reviewList = user.getReviewList();
 			result = true;
 		} catch (javassist.NotFoundException e) {
@@ -161,15 +170,15 @@ public class ReviewController {
 	}
 
 	// 특정 음식점 후기 리스트 검색
-	@GetMapping("/review/storeidx")
-	public ResponseDTO.ReviewListResponse findAllByStoreIdx(@RequestBody ReviewDTO.Get dto) {
+	@GetMapping("/review/store/{idx}")
+	public ResponseDTO.ReviewListResponse findAllByStoreIdx(@PathVariable Long idx) {
 		System.out.println("--- 특정 가게에 작성된 후기 리스트 검색 시도 ---");
 
 		boolean result = false;
 		List<Review> reviewList = null;
 
 		try {
-			Store store = storeService.findOne(dto.getStoreIdx());
+			Store store = storeService.findOne(idx);
 			reviewList = store.getReviewList();
 			result = true;
 		} catch (NotFoundException e) {

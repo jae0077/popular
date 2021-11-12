@@ -49,13 +49,15 @@ public class ReviewService {
 		reviewRepository.save(review);
 	}
 
-	public void deleteReview(Users user, Store store) throws NotFoundException {
-		Review review = reviewRepository.findByUserIdxAndStoreIdx(user, store);
-		reviewRepository.deleteById(review.getReviewIdx());
+	public void deleteReview(Users user, ReviewDTO.Delete dto) throws NotFoundException {
+		Review review = reviewRepository.findByReviewIdxAndUserIdx(dto.getReviewIdx(), user);
+
+		reviewRepository.delete(review);
 	}
 
 	private Review findOne(Long reviewIdx) throws NotFoundException {
-		Review review = reviewRepository.findById(reviewIdx).orElseThrow(() -> new Exception.NotFoundException("Review with idx: " + reviewIdx + " is not valid"));
+		Review review = reviewRepository.findById(reviewIdx)
+				.orElseThrow(() -> new Exception.NotFoundException("Review with idx: " + reviewIdx + " is not valid"));
 
 		return review;
 	}

@@ -6,7 +6,7 @@ public class ReviewDTO {
 
 	@Data
 	public static class Create {
-		private Long userIdx;
+//		private Long userIdx;
 		private Long storeIdx;
 		private String reviewContent;
 		private String reviewImage;
@@ -15,14 +15,17 @@ public class ReviewDTO {
 	@Data
 	public static class Update {
 		private Long reviewIdx;
+//		private Long userIdx;
+//		private Long storeIdx;
 		private String reviewContent;
 		private String reviewImage;
 	}
 
 	@Data
 	public static class Delete {
-		private Long userIdx;
-		private Long storeIdx;
+		private Long reviewIdx;
+//		private Long userIdx;
+//		private Long storeIdx;
 	}
 
 	@Data
