@@ -36,9 +36,7 @@ public class StoreController {
 	@GetMapping("/store/namecontaining")
 	public ResponseDTO.StoreListResponse findAllByName(StoreDTO.Get dto) throws NotFoundException {
 
-		
 		System.out.println("가게 이름으로 조회");
-		
 
 		List<Store> storeList = storeService.findAllByNameContaining(dto);
 
@@ -50,20 +48,19 @@ public class StoreController {
 	@GetMapping("/store/useridx")
 
 	public ResponseDTO.StoreListResponse findMyStore(HttpServletRequest request) throws javassist.NotFoundException {
-		
 
 		System.out.println("내 가게 조회");
 
 		boolean result = false;
 		List<Store> storeList = null;
-		
-		if (request.getSession().getAttribute("loginUser") != null) {
-			Object object = request.getSession().getAttribute("loginUser");
-			Users entity = (Users) object;
-			Users user = userService.findOne(entity.getUserIdx());
-			storeList = user.getStoreList();
-			result = true;
-
+		try {
+			if (request.getSession().getAttribute("loginUser") != null) {
+				Object object = request.getSession().getAttribute("loginUser");
+				Users entity = (Users) object;
+				Users user = userService.findOne(entity.getUserIdx());
+				storeList = user.getStoreList();
+				result = true;
+			}
 		} catch (javassist.NotFoundException e) {
 			e.printStackTrace();
 
@@ -76,10 +73,10 @@ public class StoreController {
 	public ResponseDTO.StoreResponse findOne(StoreDTO.Get dto) {
 
 		System.out.println("가게 단일 검색 시도");
-		
+
 		boolean result = false;
 		Store store = null;
-		
+
 		try {
 			store = storeService.findOne(dto.getStoreIdx());
 			result = true;
@@ -105,12 +102,12 @@ public class StoreController {
 //	가게 삭제
 	@DeleteMapping("/store")
 
-	public ResponseDTO.Delete deleteStore(HttpServletRequest request, @RequestBody StoreDTO.Delete dto) throws javassist.NotFoundException {
+	public ResponseDTO.Delete deleteStore(HttpServletRequest request, @RequestBody StoreDTO.Delete dto)
+			throws javassist.NotFoundException {
 
 		System.out.println("가게 삭제 시도");
-		
-		boolean result = false;
 
+		boolean result = false;
 
 		if (request.getSession().getAttribute("loginUser") != null) {
 			Object object = request.getSession().getAttribute("loginUser");
@@ -137,8 +134,8 @@ public class StoreController {
 //	가게 저장
 	@PostMapping("/store")
 
-	public ResponseDTO.Create saveStore(HttpServletRequest request, @RequestBody StoreDTO.Create dto) throws javassist.NotFoundException {
-		
+	public ResponseDTO.Create saveStore(HttpServletRequest request, @RequestBody StoreDTO.Create dto)
+			throws javassist.NotFoundException {
 
 		System.out.println("가게 저장 시도");
 
@@ -173,13 +170,11 @@ public class StoreController {
 	@PutMapping("/store")
 
 	public ResponseDTO.Update updateStore(HttpServletRequest request, @RequestBody StoreDTO.Update dto) {
-		
 
 		System.out.println("가게 수정 시도");
-		
+
 		boolean result = false;
 
-		
 		if (request.getSession().getAttribute("loginUser") != null) {
 			Object object = request.getSession().getAttribute("loginUser");
 			Users entity = (Users) object;
@@ -197,7 +192,6 @@ public class StoreController {
 			} catch (javassist.NotFoundException | NotFoundException e) {
 //				e.printStackTrace();
 			}
-
 
 		}
 		return new ResponseDTO.Update(result);
