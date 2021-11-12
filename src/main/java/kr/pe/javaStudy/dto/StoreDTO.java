@@ -9,8 +9,10 @@ import lombok.Data;
 public class StoreDTO {
 
 	@Data
-	public static class Create {
-		private Long userIdx;
+
+	public static class Create{
+//		private Long userIdx;
+
 		private String storeName;
 		private String tel;
 		private String address;
@@ -44,7 +46,7 @@ public class StoreDTO {
 	@Data
 	public static class Get {
 		private Long storeIdx;
-		private Long userIdx;
+//		private Long userIdx;
 		private String storeName;
 		private String tel;
 		private String address;

@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.servlet.http.HttpSession;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,23 +30,31 @@ public class UsersController {
 	@Autowired
 	private UsersService userservice;
 
-	// 유저 로그인
-	@RequestMapping(value = "user/login", method = RequestMethod.POST)
+
+	@PostMapping("/login")
 	public ResponseDTO.Login loginUser(HttpServletRequest request, @RequestBody UsersDTO.Login dto) {
-
+		System.out.println("유저 로그인 시도");
+		
 		boolean result = false;
-		Users user = userservice.login(dto);
-
+		Users user = userservice.findUserById(dto.getId());
+		
 		if (user != null) {
-
-			if (request.getSession().getAttribute("user") == null) {
-				request.getSession().setAttribute("user", user);
+			System.out.println("111");
+			// 로그인 성공시
+			if (user.getPw().equals(dto.getPw())) {
+//				session.setAttribute("loginUser", user);
+				request.getSession().setAttribute("loginUser", user);
+				Object object = request.getSession().getAttribute("loginUser");
+				Users entity = (Users)object;
+				System.out.println(entity.getId() + "로그인성공");
 
 				result = true;
 				System.out.println("로그인 성공!");
 
 			} else {
-				System.out.println("중복 로그인은 불가합니다.");
+
+				System.out.println("로그인 실패!: 비밀번호가 틀렸습니다.");
+
 			}
 		} else {
 			System.out.println("ID와 PW를 다시 확인해주세요.");
@@ -130,7 +141,9 @@ public class UsersController {
 		boolean result = false;
 		Users user = null;
 		try {
+			System.out.println("1111");
 			user = userservice.findOne(dto.getUserIdx());
+			System.out.println("2222");
 			result = true;
 		} catch (NotFoundException e) {
 //			e.printStackTrace();

@@ -41,6 +41,7 @@ public class UsersDTO {
 		private String pw;
 		private String type;
 
+
 	}
 
 }
