@@ -14,13 +14,13 @@ import kr.pe.javaStudy.repository.RTestRepository;
 
 @Service
 public class RTestService {
-	
+
 	@Autowired
 	private RTestRepository rTestRepository;
-	
+
 	public Long saveRTest(RTest rTest) throws ArgumentNullException {
 		RTest save = null;
-		save = rTestRepository.save(rTest);			
+		save = rTestRepository.save(rTest);
 
 		return save.getIdx();
 	}
@@ -28,25 +28,26 @@ public class RTestService {
 	public void updateRTest(RTestDTO.Update dto) throws NotFoundException {
 		RTest rtest = findOne(dto.getIdx());
 //		LocalDateTime date = LocalDateTime.now();
-		
+
 		rtest.setReviewContent(dto.getReviewContent());
 //		rtest.setUpdated(date);
 		rtest.setReviewImage(dto.getReviewImage());
-		
+
 		rTestRepository.save(rtest);
 	}
-	
+
 	public void deleteRTest(RTestDTO.Delete dto) throws NotFoundException {
 		RTest rtest = findOne(dto.getIdx());
 		rTestRepository.deleteById(rtest.getIdx());
 	}
 
 	private RTest findOne(Long rTestIdx) throws NotFoundException {
-		RTest rtest = rTestRepository.findById(rTestIdx).orElseThrow(() -> new Exception.NotFoundException("Review with idx: " + rTestIdx + " is not valid"));
-		
+		RTest rtest = rTestRepository.findById(rTestIdx)
+				.orElseThrow(() -> new Exception.NotFoundException("Review with idx: " + rTestIdx + " is not valid"));
+
 		return rtest;
 	}
-	
+
 	public List<RTest> findAll() {
 		return rTestRepository.findAll();
 	}

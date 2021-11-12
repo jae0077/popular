@@ -35,6 +35,7 @@ public class Review {
 	@Column(name = "review_idx")
 	private Long reviewIdx;
 
+
 	@NonNull
 	@ManyToOne
 	@JsonManagedReference
@@ -48,6 +49,7 @@ public class Review {
 	private Store storeIdx;
 
 	@NonNull
+
 	@Column(name = "review_content")
 	private String reviewContent;
 
@@ -65,7 +67,6 @@ public class Review {
 
 	public Review(@NonNull Users userIdx, @NonNull Store storeIdx, @NonNull String reviewContent,
 			@NonNull String reviewImage) {
-		super();
 		this.userIdx = userIdx;
 		this.storeIdx = storeIdx;
 		this.reviewContent = reviewContent;

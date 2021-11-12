@@ -6,7 +6,7 @@ import kr.pe.javaStudy.domain.Review;
 import kr.pe.javaStudy.domain.Store;
 import kr.pe.javaStudy.domain.Users;
 
-public interface ReviewRepository extends JpaRepository<Review, Long>{
+public interface ReviewRepository extends JpaRepository<Review, Long> {
 
 	Review findByUserIdxAndStoreIdx(Users user, Store store);
 
