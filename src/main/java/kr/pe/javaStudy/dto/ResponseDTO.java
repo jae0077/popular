@@ -79,7 +79,7 @@ public class ResponseDTO {
 	@AllArgsConstructor
 	public static class RTestResponse {
 		Boolean success;
-		private Review review;
+		private RTest rTest;
 	}
 
 	// 로그인 없는 리뷰 - 나중에 삭제하기
@@ -88,6 +88,22 @@ public class ResponseDTO {
 	public static class RTestListResponse {
 		Boolean success;
 		private List<RTest> rTestList;
+	}
+	
+	// 로그인 후 리뷰
+	@Data
+	@AllArgsConstructor
+	public static class ReviewResponse {
+		Boolean success;
+		private Review review;
+	}
+	
+	// 로그인 후 리뷰
+	@Data
+	@AllArgsConstructor
+	public static class ReviewListResponse {
+		Boolean success;
+		private List<Review> reviewList;
 	}
 
 	// 로그인(새로 만든 부분)
