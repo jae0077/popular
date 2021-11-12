@@ -32,56 +32,44 @@ public class UsersController {
 	public ResponseDTO.Login loginUser(HttpServletRequest request, @RequestBody UsersDTO.Login dto) {
 
 		boolean result = false;
-		UsersDTO.Get user = userservice.login(dto.getId());
+		Users user = userservice.login(dto);
 
 		if (user != null) {
 
-			if (user.getPw().equals(dto.getPw()) && request.getSession().getAttribute("user") == null) {
+			if (request.getSession().getAttribute("user") == null) {
 				request.getSession().setAttribute("user", user);
 
-				Object object = request.getSession().getAttribute("user");
-				Users entity = (Users)object;
-
-				System.out.println(entity.getId());
-				System.out.println(entity.getPw());
-
 				result = true;
-				System.out.println(entity.getId() + " " + entity.getPw() + " " + "로그인 성공!");
+				System.out.println("로그인 성공!");
 
 			} else {
-				System.out.println("로그인 실패! : 패스워드를 다시 확인해주세요. 중복 로그인은 불가합니다.");
+				System.out.println("중복 로그인은 불가합니다.");
 			}
 		} else {
-			System.out.println("로그인 실패! : 등록되지 않은 회원입니다.");
+			System.out.println("ID와 PW를 다시 확인해주세요.");
 		}
 
 		return new ResponseDTO.Login(result);
-		
+
 	}
 
 	// 유저 로그아웃
-	@ RequestMapping("/user/logout")
+	@RequestMapping("/user/logout")
 	public ResponseDTO.Logout logoutUser(HttpServletRequest request) {
-		
-		boolean result = false;
-		if(request.getSession().getAttribute("user") != null) {
-			
-			Object object = request.getSession().getAttribute("user");
-			Users entity = (Users)object;
-			
-			System.out.println(entity.getId());
-	        System.out.println(entity.getPw());
 
-	        System.out.println(entity.getId() + " " + entity.getPw() + " " + "로그아웃 성공!");
-	        request.getSession().removeAttribute("user");
+		boolean result = false;
+		if (request.getSession().getAttribute("user") != null) {
+
+			request.getSession().removeAttribute("user");
 			result = true;
-			
+			System.out.println("로그아웃 성공!");
+
 		} else {
 			System.out.println("로그아웃 실패! : 로그인이 되어있지 않은 상태에서는 로그아웃이 불가합니다.");
 		}
-		
+
 		return new ResponseDTO.Logout(result);
-		
+
 	}
 
 	// 유저 저장

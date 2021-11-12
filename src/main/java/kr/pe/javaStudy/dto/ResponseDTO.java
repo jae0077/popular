@@ -88,20 +88,5 @@ public class ResponseDTO {
 		private List<Menu> menuList;
 	}
 
-	// 로그인 없는 리뷰 - 나중에 삭제하기
-	@Data
-	@AllArgsConstructor
-	public static class RTestResponse {
-		Boolean success;
-		private Review review;
-	}
-
-	// 로그인 없는 리뷰 - 나중에 삭제하기
-	@Data
-	@AllArgsConstructor
-	public static class RTestListResponse {
-		Boolean success;
-		private List<RTest> rTestList;
-	}
 
 }

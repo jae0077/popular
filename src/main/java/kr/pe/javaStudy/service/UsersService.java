@@ -19,17 +19,9 @@ public class UsersService {
 	private UsersRepository usersRepository;
 
 	// 로그인
-	public UsersDTO.Get login(String id) {
-		Users User = usersRepository.findUsersById(id);
-		UsersDTO.Get loginUser = null;
-
-		if (User != null) {
-			loginUser = new UsersDTO.Get(User);
-		} else { // 없는 회원일 때
-			return null;
-		}
-
-		return loginUser;
+	public Users login(UsersDTO.Login dto) {
+		Users User = usersRepository.findUsersByIdAndPw(dto.getId(), dto.getPw());
+		return User;
 	}
 	
 	// 유저 찾기

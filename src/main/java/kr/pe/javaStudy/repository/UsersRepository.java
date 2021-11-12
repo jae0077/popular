@@ -7,4 +7,7 @@ import kr.pe.javaStudy.domain.Users;
 public interface UsersRepository extends JpaRepository<Users, Long> {
 
 	Users findUsersById(String id);
+	
+	Users findUsersByIdAndPw(String id, String pw);
+
 }
